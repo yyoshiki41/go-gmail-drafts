@@ -27,3 +27,6 @@ _testmain.go
 
 config/client_secret.json
 config/gmail_token.json
+
+.credentials/*
+!.gitkeep

@@ -22,3 +22,8 @@ _testmain.go
 *.exe
 *.test
 *.prof
+
+.DS_Store
+
+config/client_secret.json
+config/gmail_token.json

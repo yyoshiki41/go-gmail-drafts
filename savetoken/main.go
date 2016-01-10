@@ -27,11 +27,11 @@ func getTokenFromWeb(config *oauth2.Config) *oauth2.Token {
 		log.Fatalf("Unable to read authorization code %v", err)
 	}
 
-	tok, err := config.Exchange(oauth2.NoContext, code)
+	token, err := config.Exchange(oauth2.NoContext, code)
 	if err != nil {
 		log.Fatalf("Unable to retrieve token from web %v", err)
 	}
-	return tok
+	return token
 }
 
 // saveToken uses a file path to create a file and store the

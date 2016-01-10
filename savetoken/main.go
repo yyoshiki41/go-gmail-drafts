@@ -9,6 +9,8 @@ import (
 	"os"
 	"path/filepath"
 
+	conflib "github.com/yyoshiki41/go-gmail-drafts/lib"
+
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 
@@ -49,12 +51,7 @@ func saveToken(file string, token *oauth2.Token) {
 func main() {
 	cacheFile := filepath.Join("./.credentials", url.QueryEscape("gmail_token.json"))
 
-	b, err := ioutil.ReadFile("./config/client_secret.json")
-	if err != nil {
-		log.Fatalf("Unable to read client secret file: %v", err)
-	}
-	config, err := google.ConfigFromJSON(b,
-		gmail.GmailComposeScope, gmail.GmailModifyScope)
+	config, err := conflib.CreateGmailConfig()
 	if err != nil {
 		log.Fatalf("Unable to parse client secret file to config: %v", err)
 	}

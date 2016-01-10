@@ -12,9 +12,10 @@ import (
 	"strings"
 	"time"
 
+	conflib "github.com/yyoshiki41/go-gmail-drafts/lib"
+
 	"golang.org/x/net/context"
 	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/google"
 	"golang.org/x/text/encoding/japanese"
 	"golang.org/x/text/transform"
 
@@ -57,6 +58,31 @@ func loadBodyFile() (map[string]interface{}, error) {
 	return c, nil
 }
 
+// createDraftsStr returns to, subject and message for gmail.
+func createDraftsStr(draftMap map[string]interface{}) {
+	// mail to
+	toStr := "to: "
+	if to, ok := draftMap["to"].(string); ok {
+		toStr += to
+	}
+	toStr += "\n"
+	// subject
+	subStr := "subject: "
+	if subject, ok := draftMap["subject"].(string); ok {
+		subStr += subject
+	}
+	subStr += "\n"
+	t := time.Now()
+	subStr = strings.Replace(subStr, "{{today}}", t.Format("01/02"), -1)
+	// message
+	msgStr := "\n"
+	if message, ok := draftMap["message"].(string); ok {
+		msgStr += message
+	}
+	msgStr = strings.Replace(msgStr, "{{today}}", t.Format("01/02"), -1)
+	return toStr, subStr, msgStr
+}
+
 // Convert UTF-8 to ISO2022JP
 func toISO2022JP(str string) ([]byte, error) {
 	reader := strings.NewReader(str)
@@ -68,13 +94,7 @@ func toISO2022JP(str string) ([]byte, error) {
 func main() {
 	ctx := context.Background()
 
-	b, err := ioutil.ReadFile("./config/client_secret.json")
-	if err != nil {
-		log.Fatalf("Unable to read client secret file: %v", err)
-	}
-
-	config, err := google.ConfigFromJSON(b,
-		gmail.GmailComposeScope, gmail.GmailModifyScope)
+	config, err := conflib.CreateGmailConfig()
 	if err != nil {
 		log.Fatalf("Unable to parse client secret file to config: %v", err)
 	}
@@ -90,26 +110,7 @@ func main() {
 	if err != nil {
 		log.Fatalf("Unable to parse draft template file to map structure: %v", err)
 	}
-
-	toStr := "to: "
-	if to, ok := draftMap["to"].(string); ok {
-		toStr += to
-	}
-	toStr += "\n"
-
-	subStr := "subject: "
-	if subject, ok := draftMap["subject"].(string); ok {
-		subStr += subject
-	}
-	subStr += "\n"
-	t := time.Now()
-	subStr = strings.Replace(subStr, "{{today}}", t.Format("01/02"), -1)
-
-	msgStr := "\n"
-	if message, ok := draftMap["message"].(string); ok {
-		msgStr += message
-	}
-	msgStr = strings.Replace(msgStr, "{{today}}", t.Format("01/02"), -1)
+	toStr, subStr, msgStr := createDraftsStr(draftMap)
 
 	header, _ := toISO2022JP(toStr + subStr)
 	msg := []byte(msgStr)

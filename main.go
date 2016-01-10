@@ -59,7 +59,7 @@ func loadBodyFile() (map[string]interface{}, error) {
 }
 
 // createDraftsStr returns to, subject and message for gmail.
-func createDraftsStr(draftMap map[string]interface{}) {
+func createDraftsStr(draftMap map[string]interface{}) (string, string, string) {
 	// mail to
 	toStr := "to: "
 	if to, ok := draftMap["to"].(string); ok {

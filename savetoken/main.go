@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
 	"log"
 	"net/url"
 	"os"
@@ -12,9 +11,6 @@ import (
 	conflib "github.com/yyoshiki41/go-gmail-drafts/lib"
 
 	"golang.org/x/oauth2"
-	"golang.org/x/oauth2/google"
-
-	"google.golang.org/api/gmail/v1"
 )
 
 // getTokenFromWeb uses Config to request a Token.

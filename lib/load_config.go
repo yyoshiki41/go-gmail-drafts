@@ -1,9 +1,11 @@
 package config
 
 import (
+	"io/ioutil"
+
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
-	"io/ioutil"
+	"google.golang.org/api/gmail/v1"
 )
 
 const filePath = "config/client_secret.json"

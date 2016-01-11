@@ -6,6 +6,7 @@ import (
 	"log"
 	"net/url"
 	"os"
+	"os/exec"
 	"path/filepath"
 
 	conflib "github.com/yyoshiki41/go-gmail-drafts/lib"
@@ -17,8 +18,14 @@ import (
 // It returns the retrieved Token.
 func getTokenFromWeb(config *oauth2.Config) *oauth2.Token {
 	authURL := config.AuthCodeURL("state-token", oauth2.AccessTypeOffline)
-	fmt.Printf("Go to the following link in your browser then type the "+
-		"authorization code: \n%v\n", authURL)
+
+	cmd := exec.Command("open", authURL)
+	if err := cmd.Start(); err != nil {
+		fmt.Errorf("Browser Start Error: %v\n", err)
+		fmt.Errorf("Go to the following link in your browser.\n")
+	}
+	fmt.Printf("URL: %v\nType the authorization code.\n", authURL)
+	fmt.Printf("")
 
 	var code string
 	if _, err := fmt.Scan(&code); err != nil {

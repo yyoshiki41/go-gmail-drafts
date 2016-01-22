@@ -25,7 +25,6 @@ func getTokenFromWeb(config *oauth2.Config) *oauth2.Token {
 		fmt.Errorf("Go to the following link in your browser.\n")
 	}
 	fmt.Printf("URL: %v\nType the authorization code.\n", authURL)
-	fmt.Printf("")
 
 	var code string
 	if _, err := fmt.Scan(&code); err != nil {

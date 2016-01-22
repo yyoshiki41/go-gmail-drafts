@@ -52,7 +52,7 @@ $ vim config/draft_tmpl.json
 {
   "to": "xxx@gmail.com",
   "subject": "Daily Reports",
-  "message": "Hello!\nToday is a draft."
+  "message": "Hello!\nThis is a draft."
 }
 ```
 

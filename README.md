@@ -13,7 +13,7 @@ $ go get -u github.com/yyoshiki41/go-gmail-drafts/...
 - Download credential file (`client_secret.json`) .
 
 ## Configuration
-### 1. Put your credential file (`client_secret.json`) 
+### 1. Put your credential file
 
 ```shell
 $ cd $GOPATH/src/github.com/yyoshiki41/go-gmail-drafts
@@ -23,6 +23,7 @@ $ mv /path/to/client_secret.json config/client_secret.json
 ### 2. Save access token to cachefile
 
 Open the browser automatically when exec `go run` command.
+
 After authorize Google APIs, paste authorization code into the command-line prompt.
 
 ```shell

@@ -62,6 +62,8 @@ Run!
 $ go run main.go
 ```
 
+![sample](https://raw.githubusercontent.com/wiki/yyoshiki41/go-gmail-drafts/images/sample.png)
+
 ## License 
 The MIT License
 
